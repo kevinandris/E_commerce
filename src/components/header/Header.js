@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { SET_ACTIVE_USER } from '../../redux/slice/authSlice'
 import { REMOVE_ACTIVE_USER } from '../../redux/slice/authSlice'
 import ShowOnLogin, { ShowOnLogout } from '../hiddenLink.js/HiddenLink'
-import AdminOnlyRoute from '../adminOnlyRoute/AdminOnlyRoute'
+import AdminOnlyRoute, { AdminOnlyLink } from '../adminOnlyRoute/AdminOnlyRoute'
 
 
 const logo = (
@@ -131,11 +131,13 @@ const Header = () => {
                   <FaTimes size={22} color="#fff" onClick={hideMenu} />
                 </li>
 
-                {/* ADMIN BUTTON */}
+                {/* ! ADMIN BUTTON */}
                 <li>
-                  <AdminOnlyRoute>
-                    <button className='--btn --btn-primary'>Admin</button>
-                  </AdminOnlyRoute>
+                  <AdminOnlyLink>
+                    <Link to="/admin/home">
+                      <button className='--btn --btn-primary'>Admin</button>
+                    </Link>
+                  </AdminOnlyLink>
                 </li>
 
                 <li>
