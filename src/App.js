@@ -14,9 +14,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // ! Pages
-import {Home, Contact, Login, Register, Reset} from "./pages"
+import {Home, Contact, Login, Register, Reset, Admin} from "./pages"
 // ! Components
 import {Header, Footer} from "./components"
+import AdminOnlyRoute from './components/adminOnlyRoute/AdminOnlyRoute';
 
 
 function App() {
@@ -28,12 +29,21 @@ function App() {
         <Header/>
 
           <Routes>
+          
             <Route path="/" element={<Home/>}/> {/* Home page */}
             <Route path="/contact" element={<Contact/>}/> {/* Home page */}
 
             <Route path="/login" element={<Login/>}/> {/* login page */}
             <Route path="/register" element={<Register/>}/> {/* register page */}
             <Route path="/reset" element={<Reset/>}/> {/* reset page */}
+
+            {/* admin page -- ONLY FOR ADMIN */}
+            <Route path="/admin/*" element={
+              <AdminOnlyRoute>
+                <Admin/>
+              </AdminOnlyRoute> 
+            }/>
+
           </Routes>
 
         <Footer />
