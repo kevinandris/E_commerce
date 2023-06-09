@@ -8,7 +8,7 @@ const Slider = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
     const slideLength = sliderData.length;
-    console.log(slideLength)
+    // console.log(slideLength)
 
     // auto scroll variables
     const autoScroll = true
@@ -51,7 +51,9 @@ const Slider = () => {
     // ==================================================================== //
     
     return (
+
         <div className='slider'>
+        
             <AiOutlineArrowLeft className='arrow prev' onClick={prevSlide}/>
             <AiOutlineArrowRight className='arrow next' onClick={nextSlide}/>
 
@@ -81,7 +83,8 @@ const Slider = () => {
                         
                     </div>
                 )
-            }) }
+            })}
+
         </div>
   )
 }
