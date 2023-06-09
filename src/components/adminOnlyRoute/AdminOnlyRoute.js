@@ -1,8 +1,8 @@
-// ! 15 -- Routes only for Admin
+// ! 15 (child) -- Routes only for Admin
 
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectEmail } from '../../redux/slice/authSlice'
+import { selectEmail } from '../../redux/slice/authSlice' // js file
 
 const AdminOnlyRoute = ({children}) => {
 
@@ -10,7 +10,7 @@ const AdminOnlyRoute = ({children}) => {
     const userEmail = useSelector(selectEmail)
     // console.log(userEmail)
     
-    // sensitive information of email
+    // sensitive information of email to access admin button
     if (userEmail === "test@gmail.com") {
         return children
     }
