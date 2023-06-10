@@ -129,11 +129,13 @@ const AddProduct = () => {
                 {/* condition for progress bar */}
                 {uploadProgress === 0 ? null : (
                   <div className={styles.progress}>
+                  
                     <div 
                         className={styles["progress-bar"]} 
                         style={{width: `${uploadProgress}%`}}>
                           {uploadProgress < 100 ? `Uploading ${uploadProgress}` : `Upload Completed ${uploadProgress}%`}
                     </div>
+
                   </div>
                 )}
 
