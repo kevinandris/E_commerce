@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "./Admin.module.scss"
 import Navbar from '../../components/admin/navbar/Navbar'
 import ViewProducts from '../../components/admin/viewProducts/ViewProducts'
-import AddProducts from '../../components/admin/addProduct/AddProduct'
+import AddProduct from '../../components/admin/addProduct/AddProduct'
 import Orders from '../../components/admin/orders/Orders'
 import Home from "../home/Home"
 import { Routes, Route } from 'react-router-dom'
@@ -22,7 +22,7 @@ const Admin = () => {
         <Routes>
           <Route path="home"  element={<Home/> }/>
           <Route path="all-products"  element={<ViewProducts/> }/>
-          <Route path="add-product"  element={<AddProducts/> }/>
+          <Route path="add-product"  element={<AddProduct/> }/>
           <Route path="orders"  element={<Orders/> }/>
         </Routes>
       </div>
