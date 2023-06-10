@@ -1,6 +1,9 @@
+// ! 17
 import { useState } from 'react'
 import styles from "./AddProduct.module.scss"
 import Card from "../../card/Card"
+import { storage } from '../../../firebase/config'
+import { ref, uploadBytesResumable } from 'firebase/storage'
 
 const categories = [
   { id: 1, name: "Laptop"},
@@ -15,21 +18,38 @@ const AddProducts = () => {
   const [product, setProduct] = useState({
     name: "",
     imageURL: "",
-    price: null,
+    price: 0,
     category: "",
     brand: "",
-    desc: "",
+    desc: "",  
   })
 
-  const handleInputChange = (e) => {};
-  const handleImageChange = (e) => {};
+  const handleInputChange = (e) => {
+    const {name, value}  = e.target
+    setProduct({...product, [name]: value})
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    // console.log(file);
+
+    // from firebase
+    const storageRef = ref(storage, `eshop/${Date.now()} ${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+  };
+
+  const addProduct = (e) => {
+    e.preventDefault()
+    console.log(product)
+  } 
   
   return (
     <div className={styles.product}>
       <h1>Add New Product</h1>
       <Card cardClass={styles.card}>
 
-        <form >
+        <form onSubmit={addProduct}>
+
           <label >Product name: </label>
           <input 
             type="text"  
@@ -60,7 +80,8 @@ const AddProducts = () => {
 
               <input 
                   type="text" 
-                  required
+                  // required
+                  placeholder='Image URL'
                   name='imageURL'                    
                   value={product.imageURL}
                   disabled
@@ -81,14 +102,14 @@ const AddProducts = () => {
                 required 
                 name="category"
                 value={product.category}
-                onChange={(e) => handleImageChange(e)}>
+                onChange={(e) => handleInputChange(e)}>
                   <option
                       value=""
                       disabled> 
                       -- choose product category --
                   </option>
                   
-                  {/* if you wanna map an array you need a key and value */}
+                  {/* if you wanna map an array you need a key and a value */}
                   {categories.map((cat) => {
                     return (
                       <option key={cat.id}  value={cat.name}>
@@ -96,30 +117,29 @@ const AddProducts = () => {
                       </option>
                     )
                   })}
-              </select>
+            </select>
 
-              <label >Product Company/Brand: </label>
-              <input 
-                type="text"  
-                placeholder='Product brand' 
+            <label >Product Company/Brand: </label>
+            <input 
+              type="text"  
+              placeholder='Product brand' 
+              required
+              name='brand'
+              value={product.brand}
+              onChange={(e) => handleInputChange(e)}
+            />
+            
+            <label >Product Description</label>
+            <textarea 
+                name="desc"
+                cols="30" 
+                rows="10"
+                value={product.desc}
                 required
-                name='brand'
-                value={product.brand}
-                onChange={(e) => handleInputChange(e)}
-              />
+                onChange={(e) => handleInputChange(e)}>
+              </textarea>
 
-              <label >Product Description</label>
-              <textarea 
-                  name="desc"
-                  cols="30" 
-                  rows="10"
-                  value={product.desc}
-                  required
-                  onChange={(e) => handleInputChange(e)}>
-                </textarea>
-
-                <button className='--btn --btn-primary'>Save product</button>
-
+              <button className='--btn --btn-primary'>Save product</button>
           </Card>
 
         </form>
