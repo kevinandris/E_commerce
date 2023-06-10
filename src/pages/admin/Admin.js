@@ -1,4 +1,4 @@
-// ! 16
+// ! 16 (PARENT)
 import React from 'react'
 import styles from "./Admin.module.scss"
 import Navbar from '../../components/admin/navbar/Navbar'
@@ -22,11 +22,10 @@ const Admin = () => {
         <Routes>
           <Route path="home"  element={<Home/> }/>
           <Route path="all-products"  element={<ViewProducts/> }/>
-          <Route path="add-products"  element={<AddProducts/> }/>
+          <Route path="add-product"  element={<AddProducts/> }/>
           <Route path="orders"  element={<Orders/> }/>
         </Routes>
       </div>
-
 
     </div>
   )

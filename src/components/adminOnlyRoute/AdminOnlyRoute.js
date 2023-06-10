@@ -11,11 +11,12 @@ const AdminOnlyRoute = ({children}) => {
     const userEmail = useSelector(selectEmail)
     // console.log(userEmail)
     
-    // sensitive information of email to access admin button
+    // IF STATEMENT - sensitive information of email to access admin button
     if (userEmail === "test@gmail.com") {
         return children
     }
 
+    // prints denied permission text and Link added to the button
     return (
         <section style={{height: "80vh"}}>
             <div className="container">
@@ -23,7 +24,6 @@ const AdminOnlyRoute = ({children}) => {
                 <p>This page can only be view by an Admin user.</p>
                 <br />
                 <Link to="/">
-
                     <button className='--btn '>&larr; Back To Home</button>
                 </Link>
             </div>
