@@ -12,12 +12,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../../components/loader/Loader'
 
 const Login = () => {
+
+    // * Variables declarations
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false)
-
     const navigate = useNavigate()
 
+    //  ! function 1
     const loginUser = (e) => {
         // preventing the reload of the page
         e.preventDefault()
@@ -29,23 +31,15 @@ const Login = () => {
         .then((userCredential) => {
             // const user = userCredential.user;
 
-            //  stop the loading 
-            setIsLoading(false)
-
-            // TOAST
-            toast.success("Login Successful...")
-
-            // direct user to homepage
-            navigate("/")
+            setIsLoading(false) //  * stop the loading 
+            toast.success("Login Successful...")  // * success message from TOAST
+            navigate("/") // * direct user to homepage
         })
         .catch((error) => {
-            //  stop the loading 
-            setIsLoading(false)
-
-            // TOAST
-            toast.error(error.message)
+            setIsLoading(false) // * stop the loading 
+            toast.error(error.message) // * error message using toast
         });
-    }
+    } // close loginUser function
 
     // Login with Google (from firebase)
     const provider = new GoogleAuthProvider();
@@ -61,7 +55,7 @@ const Login = () => {
         }).catch((error) => {
             toast.error(error.message)
         });
-    }
+    } // close loginUser function
 
     return (
         <>
@@ -74,12 +68,13 @@ const Login = () => {
                     <img src={loginImg} alt="Login" width={400}/>
                 </div>
 
-                {/* form property*/}
+                {/* Card property*/}
                 <Card>
                     <div className={styles.form}>
                         
                         <h2>Login</h2>
-
+                        
+                        {/* FORM PROPERTIES */}
                         <form onSubmit={loginUser}>
                             <input 
                                 type="text" 
@@ -110,9 +105,9 @@ const Login = () => {
 
                         <span className={styles.register}>
                             <p>
-                                Don't have an account?
+                                Don't have an account? 
                             </p>
-                            <Link to="/register">Register</Link>
+                            <Link to="/register"> Register</Link>
                         </span>
 
                     </div>

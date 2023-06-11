@@ -41,26 +41,22 @@ const activeLink = ({isActive}) =>
 
 const Header = () => {
 
-  // variables declarations
+  // * variables declarations * //
   const [showMenu, setShowMenu] = useState(false)
   const [displayName, setDisplayName] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch() // * Redux
 
-  // Redux
-  const dispatch = useDispatch()
+  // ! Monitor currently signed in user using "useEffect"
+  useEffect (() => { 
 
-  // Monitor currently signed in user using "useEffect"
-  useEffect (() => {
-
-    // from firebase
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => { // * from firebase docs
       if (user) {
         // console.log(user)
 
-        // In case user's name is not exist
-        if (user.displayName === null) {
-          const u1 = user.email.substring(0, user.email.indexOf("@")) /* cut characters from "@ symbol" */
-          const uName = u1.charAt(0).toUpperCase() + u1.slice(1) /* make the first letter an upper case */
+        if (user.displayName === null) { // * In case user's name is not exist
+          const u1 = user.email.substring(0, user.email.indexOf("@")) // * cut characters from "@ symbol"
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1) // * make the first letter an upper case
           // console.log(uName);
           setDisplayName(uName)
         } else {
@@ -77,34 +73,31 @@ const Header = () => {
       } else {
         setDisplayName('');
 
-        // remove the active users
-        dispatch(REMOVE_ACTIVE_USER());
+        dispatch(REMOVE_ACTIVE_USER()); // * remove the active users using dispatch function from redux
       }
     });
-  }, [dispatch, displayName]) 
+  }, [dispatch, displayName]) // close useEffect
 
-  // open menu function
-  const toggleMenu = () => {
+  // ! function 1
+  const toggleMenu = () => { 
     setShowMenu(!showMenu)
-  };
+  }; // close toggleMenu function
 
-  // close menu function
-  const hideMenu = () => {
+  // ! function 2
+  const hideMenu = () => { 
     setShowMenu(false)
-  }
+  } // close hideMenu function
 
-  // logoutUser function
-  const logoutUser = () => {
+  // ! function 3
+  const logoutUser = () => { 
     signOut(auth).then(() => {
-      // TOAST
-      toast.success("Logout successfully...")
+      toast.success("Logout successfully...")  // * TOAST message
 
-      /* send user to home page */
-      navigate("/")
+      navigate("/")  // * send user to home page
     }).catch((error) => {
       toast.error(error.message)
     });
-  }
+  } // close logOutUser function
   
   return (
     <>
@@ -177,7 +170,7 @@ const Header = () => {
                   
                 </span>
 
-                {cart}
+                {cart} {/* DISPLAY THE CART */}
               
               </div>
 

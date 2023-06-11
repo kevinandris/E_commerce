@@ -3,7 +3,9 @@ import styles from './ProductList.module.scss'
 
 const ProductList = () => {
   return (
-    <div>ProductList</div>
+    <div>
+        <h2>Product List</h2>
+    </div>
   )
 }
 

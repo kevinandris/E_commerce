@@ -3,7 +3,9 @@ import styles from './ProductFilter.module.scss'
 
 const ProductFilter = () => {
   return (
-    <div>ProductFilter</div>
+    <div>
+        <h2>Product Filter</h2>
+    </div>
   )
 }
 
