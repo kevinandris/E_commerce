@@ -1,11 +1,12 @@
-// ! 22
+// ! 22 - child - deployed to product.js
 import React, { useState } from 'react'
 import styles from './ProductList.module.scss'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaListAlt } from 'react-icons/fa'
 import Search from '../../search/Search'
+import ProductItem from '../productItem/ProductItem'
 
-const ProductList = () => {
+const ProductList = ({products}) => {
 
   const [grid, setGrid] = useState(true);
   const [search, setSearch] = useState("");
@@ -38,7 +39,7 @@ const ProductList = () => {
 
         {/* SORT PRODUCTS */}
         <div className={styles.sort}>
-          <label>Sort by: </label>
+          <label>Sort by: </label> 
           <select>
             <option value="latest">Latest</option>
             <option value="lowest-price">Lowest Price</option>
@@ -48,6 +49,23 @@ const ProductList = () => {
           </select>
         </div>
       </div>
+
+      <div className={grid ? `${styles.grid}` : `${styles.list}`}>
+        {products.length === 0 ? (
+          <p>No product found.</p>
+        ) : (
+          <>
+            {products.map((product) => {
+              return (
+                <div key={product.id}>
+                  <ProductItem {...product} grid={grid} product={product}/>
+                </div>
+              )
+            })}
+          </>
+        )}
+      </div>
+
     </div>
   )
 }

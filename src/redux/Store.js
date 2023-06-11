@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 
 const Store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
+    middleware: (getDefaultMiddleware) => // * remove the warnings on console
     getDefaultMiddleware({
       serializableCheck: false,
     }),
