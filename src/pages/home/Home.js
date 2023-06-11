@@ -8,7 +8,6 @@ const Home = () => {
       <div>
         {/* <Slider /> */}
         <h1>Home Page</h1>
-        {/* <AdminOnlyRoute /> */}
       </div>
     </>
   )

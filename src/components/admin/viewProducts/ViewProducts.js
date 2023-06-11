@@ -23,6 +23,7 @@ const ViewProducts = () => {
     getProducts()
   }, [])
 
+  // ! function 1
   const getProducts = () => {
     setIsLoading(true)
 
@@ -54,9 +55,9 @@ const ViewProducts = () => {
       setIsLoading(false)
       toast.error(error.message)
     }
-  };
+  }; // close getProducts function
 
-  // ! =============================== * //
+  // ! function 2
   const confirmDelete = (id, imageURL) => {
     Notiflix.Confirm.show(
       'Delete Product!!!', /* TITLE */
@@ -81,8 +82,9 @@ const ViewProducts = () => {
         cssAnimationStyle: "zoom",
       },
     );
-  }
+  } // close confirmDelete function
 
+  // ! function 3
   const deleteProduct = async (id, imageURL) => {
 
     // * FROM FIREBASE
@@ -97,9 +99,9 @@ const ViewProducts = () => {
     } catch (error) {
       toast.error(error.message)
     }
-  };
+  }; // close deleteProduct function
 
-  // ! ================================= ! //
+  // * === END OF FUNCTIONS IMPLEMENTATION === //
   
   return (
     <>

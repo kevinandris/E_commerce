@@ -27,7 +27,7 @@ const initialState = {
     desc: "",  
 }
 
-const AddProduct = () => {
+const AddProduct = () => { 
 
   const { id } = useParams()  // * get params that is passed based on URL
   const products = useSelector(selectProducts) // * console.log(products)  ==> for testing on console ctrl-shift k
@@ -38,12 +38,11 @@ const AddProduct = () => {
     const newState = detectForm(id, { ...initialState}, productEdit)
     return newState;
   });
-
   const [uploadProgress, setUploadProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-
   const navigate = useNavigate() // * to navigate users to a specific page
 
+  // ! function 5
   function detectForm(id, f1, f2) { // * to make certain elements dynamic
     if (id === "ADD") {
       return f1;
@@ -51,11 +50,13 @@ const AddProduct = () => {
     return f2 
   } //  close detectForm function
 
+  // ! function 1
   const handleInputChange = (e) => {
     const {name, value}  = e.target
     setProduct({...product, [name]: value})
   }; // close handleInputChange function
 
+  // ! function 2
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     // console.log(file);
@@ -83,6 +84,7 @@ const AddProduct = () => {
     );
   }; // close handleImageChange function
 
+  // ! function 3
   const addProduct = (e) => {
     e.preventDefault() // console.log(product)
 
@@ -113,6 +115,7 @@ const AddProduct = () => {
     }
   } // close addProduct function
 
+  // ! function 4
   const editProduct = async (e) => {
     e.preventDefault();
 
@@ -233,7 +236,7 @@ const AddProduct = () => {
                           </option>
                         )
                       }
-                      
+
                     )}
                 </select>
 
