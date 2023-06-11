@@ -9,55 +9,26 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa"
 import Loader from '../../loader/Loader';
 import { deleteObject, ref } from 'firebase/storage';
 import Notiflix from 'notiflix';
-import { useDispatch } from 'react-redux';
-import { STORE_PRODUCTS } from '../../../redux/slice/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { STORE_PRODUCTS, selectProducts } from '../../../redux/slice/productSlice';
+import useFetchCollection from '../../../customHooks/useFetchCollection';
 
 const ViewProducts = () => {
 
-  const [products, setProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollectionHook to grab the components
+  const products = useSelector(selectProducts)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts()
-  }, [])
+          dispatch(
+          STORE_PRODUCTS({
+            products: data,
+          })
+        );
+  }, [dispatch, data])
 
   // ! function 1
-  const getProducts = () => {
-    setIsLoading(true)
-
-    try {
-      // * FROM FIREBASE
-      const productsRef = collection(db, "products");
-
-      // * order and limit data when fetching the stored data
-      const q = query(productsRef, orderBy("createdAt", "desc"));
-
-      // * Listen to multiple documents in a collection: monitor the document
-      onSnapshot(q, (snapshot) => {
-        // console.log(snapshot.docs)
-
-        const allProducts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        // console.log(allProducts);
-        setProducts(allProducts);
-        setIsLoading(false);
-        dispatch(
-          STORE_PRODUCTS({
-            products: allProducts,
-          }));
-      });
-      
-    } catch (error) {
-      setIsLoading(false)
-      toast.error(error.message)
-    }
-  }; // close getProducts function
-
-  // ! function 2
   const confirmDelete = (id, imageURL) => {
     Notiflix.Confirm.show(
       'Delete Product!!!', /* TITLE */
@@ -84,7 +55,7 @@ const ViewProducts = () => {
     );
   } // close confirmDelete function
 
-  // ! function 3
+  // ! function 2
   const deleteProduct = async (id, imageURL) => {
 
     // * FROM FIREBASE

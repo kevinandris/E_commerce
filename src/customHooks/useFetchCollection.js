@@ -2,8 +2,9 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebase/config';
+import { toast } from 'react-toastify';
 
-const useFetchCollection = ({collectionName}) => {
+const useFetchCollection = (collectionName) => {
 
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -16,7 +17,7 @@ const useFetchCollection = ({collectionName}) => {
           const docRef = collection(db, collectionName);
     
           // * order and limit data when fetching the stored data
-          const q = query(productsRef, orderBy("createdAt", "desc"));
+          const q = query(docRef, orderBy("createdAt", "desc"));
     
           // * Listen to multiple documents in a collection: monitor the document
           onSnapshot(q, (snapshot) => {
