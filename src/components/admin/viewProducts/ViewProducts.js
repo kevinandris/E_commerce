@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
+// ! 18
+import React, { useEffect, useState } from 'react'
 import styles from './ViewProducts.module.scss'
 import { toast } from 'react-toastify'
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../firebase/config'
+import { Link } from 'react-router-dom'
+import { FaEdit, FaTrashAlt } from "react-icons/fa"
 
 const ViewProducts = () => {
 
@@ -18,7 +21,7 @@ const ViewProducts = () => {
 
     try {
       // * FROM FIREBASE
-      const productsRef = collection(db, "cities");
+      const productsRef = collection(db, "products");
 
       // * order and limit data when fetching the stored data
       const q = query(productsRef, orderBy("createdAt", "desc"));
@@ -33,6 +36,7 @@ const ViewProducts = () => {
         }))
         console.log(allProducts)
         setProducts(allProducts)
+        setIsLoading(false)
       });
       
     } catch (error) {
@@ -42,7 +46,65 @@ const ViewProducts = () => {
   };
   
   return (
-    <div>View Products</div>
+    <>
+      <div className={styles.table}>
+        <h2>All Products</h2>
+
+        {/* IF THERE IS NOTHING displays a message */}
+        {products.length === 0 ? (
+          <p>No product found.</p>
+          ) : (
+            <table>
+            <thead>
+                <tr>
+                  <th>s/n</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+            </thead>
+
+                  <tbody>
+                    {products.map((product, index) => {
+                      const {id, name, price, imageURL, category} = product;
+                      return (
+                        <tr key={id}>
+                            <td>
+                              {index + 1}
+                            </td>
+                            <td>
+                              <img src={imageURL} alt={name} style={{width: "100px"}}/>
+                            </td>
+
+                            <td>
+                              {name}
+                            </td>
+
+                            <td>
+                              {category}
+                            </td>
+
+                            <td>
+                              {`$${price}`}
+                            </td>
+
+                            <td>
+                              <Link to="/admin/add-product">
+                                  <FaEdit size={20} color='green'/>
+                              </Link>
+                                &nbsp; {/* space */}
+                                <FaTrashAlt size={18} color='red'/>
+                            </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+            </table>
+          )} 
+      </div>
+    </>
   )
 }
 
