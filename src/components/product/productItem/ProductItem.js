@@ -1,4 +1,4 @@
-// ! 24
+// ! 24 - child
 import React from 'react'
 import styles from './ProductItem.module.scss'
 import Card from '../../card/Card'
