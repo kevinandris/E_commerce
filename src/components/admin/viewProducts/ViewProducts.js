@@ -117,8 +117,8 @@ const ViewProducts = () => {
                   <thead>
                       <tr>
                         <th>s/n</th>
-                        <th>Name</th>
                         <th>Image</th>
+                        <th>Name</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Actions</th>

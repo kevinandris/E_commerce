@@ -3,8 +3,8 @@ import styles from "./AddProduct.module.scss"
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db, storage } from '../../../firebase/config'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { Timestamp, addDoc, collection } from 'firebase/firestore'
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { Timestamp, addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import Loader from "../../loader/Loader"
@@ -49,18 +49,18 @@ const AddProduct = () => {
       return f1;
     }
     return f2 
-  }
+  } //  close detectForm function
 
   const handleInputChange = (e) => {
     const {name, value}  = e.target
     setProduct({...product, [name]: value})
-  };
+  }; // close handleInputChange function
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     // console.log(file);
 
-    // from firebase docs website 
+    // * from firebase docs website 
     const storageRef = ref(storage, `eshop/${Date.now()} ${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -77,21 +77,19 @@ const AddProduct = () => {
             (downloadURL) => {
             setProduct({...product, imageURL: downloadURL})
 
-            // message for successful upload
-            toast.success("Image uploaded successfully.")
+            toast.success("Image uploaded successfully.") // * message for successful upload
           });
         }
     );
-  };
+  }; // close handleImageChange function
 
   const addProduct = (e) => {
-    e.preventDefault()
-    // console.log(product)
+    e.preventDefault() // console.log(product)
 
-    setIsLoading(true)
+    setIsLoading(true) // * turn on the loading
 
     try {
-      const docRef = addDoc(collection(db, "products"), {   // from firebase docs (add data)
+      const docRef = addDoc(collection(db, "products"), {  // * from firebase docs (add data)
         name: product.name,
         imageURL: product.imageURL,
         price: product.price,
@@ -113,22 +111,41 @@ const AddProduct = () => {
       setIsLoading(false)
       toast.error(error.message)
     }
-  }
+  } // close addProduct function
 
-  const editProduct = (e) => {
+  const editProduct = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
+    if (product.imageURL !== productEdit.imageURL) { // * delete the previous image after updating
+      const storageRef = ref(storage, productEdit.imageURL);
+      deleteObject(storageRef)
+    }
+
     try {
+        await setDoc(doc(db, "products", id), { // * from FIREBASE add doc
+          name: product.name,
+          imageURL: product.imageURL,
+          price: product.price,
+          category: product.category,
+          brand: product.brand,
+          desc: product.desc, 
+          createdAt: productEdit.createdAt,
+          editedAt: Timestamp.now().toDate()
+      });
+
+      setIsLoading(false);
+      toast.success("Product Edited Successfully");
+      navigate("/admin/all-products");
       
     } catch (error) {
       setIsLoading(false)
       toast.error(error.message)
     }
-  }
+  } // close editProduct function
 
-  // * ========================================== * //
+  // * CLOSE FUNCTIONS IMPLEMENTATION * //
 
   return (
     <>
@@ -215,7 +232,9 @@ const AddProduct = () => {
                               {cat.name}
                           </option>
                         )
-                      })}
+                      }
+                      
+                    )}
                 </select>
 
                 <label >Product Company/Brand: </label>
