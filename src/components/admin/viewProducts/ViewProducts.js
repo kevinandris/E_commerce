@@ -8,11 +8,16 @@ import { Link } from 'react-router-dom'
 import { FaEdit, FaTrashAlt } from "react-icons/fa"
 import Loader from '../../loader/Loader';
 import { deleteObject, ref } from 'firebase/storage';
+import Notiflix from 'notiflix';
+import { useDispatch } from 'react-redux';
+import { STORE_PRODUCTS } from '../../../redux/slice/productSlice';
 
 const ViewProducts = () => {
 
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getProducts()
@@ -36,9 +41,13 @@ const ViewProducts = () => {
           id: doc.id,
           ...doc.data()
         }))
-        console.log(allProducts)
-        setProducts(allProducts)
-        setIsLoading(false)
+        // console.log(allProducts);
+        setProducts(allProducts);
+        setIsLoading(false);
+        dispatch(
+          STORE_PRODUCTS({
+            products: allProducts,
+          }));
       });
       
     } catch (error) {
@@ -46,6 +55,33 @@ const ViewProducts = () => {
       toast.error(error.message)
     }
   };
+
+  // ! =============================== * //
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      'Delete Product!!!', /* TITLE */
+      'You are about to delete this product',
+      'Delete',
+      'Cancel',
+
+      function okCb() {
+        deleteProduct(id, imageURL)
+        // alert('Product deleted');
+      },
+
+      function cancelCb() {
+        console.log("Delete canceled")
+        // alert('The product is not deleted');
+      },
+      {
+        width: '320px',
+        borderRadius: '3px',
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      },
+    );
+  }
 
   const deleteProduct = async (id, imageURL) => {
 
@@ -62,6 +98,8 @@ const ViewProducts = () => {
       toast.error(error.message)
     }
   };
+
+  // ! ================================= ! //
   
   return (
     <>
@@ -112,14 +150,14 @@ const ViewProducts = () => {
                             </td>
 
                             <td className={styles.icons}>
-                              <Link to="/admin/add-product">
+                              <Link to={`/admin/add-product/${id}`}>
                                   <FaEdit size={20} color='green'/>
                               </Link>
                                 &nbsp; {/* space */}
                                 <FaTrashAlt 
                                   size={18} 
                                   color='red' 
-                                  onClick={() => deleteProduct(id, imageURL)}
+                                  onClick={() => confirmDelete(id, imageURL)}
                                 />
                             </td>
                         </tr>
