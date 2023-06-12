@@ -57,7 +57,8 @@ const Product = () => {
                     <b>{showFilter ? "Hide Filter" : "Show Filter"}</b>
                   </p>
                 </div>
-            </div>
+
+              </div>
           </div>
           
     </section>
