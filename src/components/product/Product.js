@@ -4,23 +4,28 @@ import styles from './Product.module.scss'
 import ProductFilter from './productFilter/ProductFilter'
 import ProductList from './productList/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
-import { STORE_PRODUCTS, selectProducts } from '../../redux/slice/productSlice'
+import { GET_PRICE_RANGE, STORE_PRODUCTS, selectProducts } from '../../redux/slice/productSlice'
 import useFetchCollection from '../../customHooks/useFetchCollection'
 import SpinnerImg from "../../assets/spinner.jpg"
 
+
 const Product = () => {
 
-  const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollectionHook to grab the components
+  const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollection customHook to grab the components
   const products = useSelector(selectProducts);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-          dispatch(
-          STORE_PRODUCTS({
+          dispatch (
+            STORE_PRODUCTS({
+              products: data,
+            })
+          );
+
+          dispatch(GET_PRICE_RANGE({
             products: data,
-          })
-        );
+          }))
   }, [dispatch, data])
 
   return (
