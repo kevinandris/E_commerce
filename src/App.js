@@ -19,6 +19,7 @@ import {Home, Contact, Login, Register, Reset, Admin} from "./pages"
 // ! Components
 import {Header, Footer} from "./components"
 import AdminOnlyRoute from './components/adminOnlyRoute/AdminOnlyRoute';
+import ProductDetails from './components/product/productDetails/ProductDetails';
 
 function App() {
 
@@ -43,6 +44,8 @@ function App() {
                 <Admin/>
               </AdminOnlyRoute> 
             }/>
+
+            <Route path="/product-details/:id" element={<ProductDetails/>}/> {/* product details page */}
 
           </Routes>
 
