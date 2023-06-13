@@ -1,8 +1,8 @@
 // ! 29
 import React from 'react'
 import styles from './Cart.module.scss'
-import { selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
-import { useSelector } from 'react-redux'
+import { ADD_TO_CART, DECREASE_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import {FaTrashAlt} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Card from '../../components/card/Card'
@@ -12,6 +12,15 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems)
   const cartTotalAmount = useSelector(selectCartTotalAmount)
   const cartTotalQuantity = useSelector(selectCartTotalQuantity)
+  const dispatch = useDispatch()
+
+  const increaseCart = (cart) => {
+    dispatch(ADD_TO_CART(cart));
+  };
+
+  const decreaseCart = (cart) => {
+    dispatch(DECREASE_CART(cart));
+  };
   
   return (
       <section>
@@ -54,11 +63,11 @@ const Cart = () => {
                       <td>{price}</td>
                       <td>
                         <div className={styles.count}>
-                          <button className='--btn'>-</button>
+                          <button className='--btn' onClick={() => decreaseCart(cart)}>-</button>
                           <p>
                             <b>{cartQuantity}</b>
                           </p>
-                          <button className='--btn'>+</button>
+                          <button className='--btn' onClick={() => increaseCart(cart)}>+</button>
                         </div>
                       </td>
                       <td>
@@ -91,8 +100,9 @@ const Cart = () => {
                     <p>Tax and shipping calculated at checkout</p>
                     <button className='--btn --btn-primary --btn-block'>Checkout</button>
                   </Card>
+
                 </div>
-            </div>
+             </div>
           </>
           )}
         </div>
