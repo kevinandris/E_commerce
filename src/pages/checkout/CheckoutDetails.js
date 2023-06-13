@@ -6,6 +6,7 @@ import { CountryDropdown } from 'react-country-region-selector'
 import { useDispatch } from 'react-redux'
 import { SAVE_BILLING_ADDRESS, SAVE_SHIPPING_ADDRESS } from '../../redux/slice/checkoutSlice'
 import { useNavigate } from 'react-router-dom'
+import CheckoutSummary from '../../components/checkoutSummary/CheckoutSummary'
 
 const initialAddressState = {
     name: "",
@@ -226,6 +227,12 @@ const CheckoutDetails = () => {
                             />
 
                             <button className='--btn --btn-primary' type='submit'>Proceed To Checkout</button>
+                        </Card>
+                    </div>
+
+                    <div>
+                        <Card cardClass={styles.card}>
+                                <CheckoutSummary/>
                         </Card>
                     </div>
                 </form>

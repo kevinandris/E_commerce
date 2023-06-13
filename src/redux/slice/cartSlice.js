@@ -30,8 +30,7 @@ const cartSlice = createSlice({
             toast.success(`${action.payload.name} added to cart`, {position: "top-left"})
         }
 
-        // save cart to LS
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+        localStorage.setItem("cartItems", JSON.stringify(state.cartItems)) // * save cart to LS
     },
 
     DECREASE_CART(state, action) {
