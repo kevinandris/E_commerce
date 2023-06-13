@@ -22,7 +22,6 @@ const cartSlice = createSlice({
             // * Item already exists in the cart (increase the cart quantity)
             state.cartItems[productIndex].cartQuantity += 1;
             toast.info(`${action.payload.name} increased by one`, {position: "top-left"})
-
         } else {
             // * Item does not exists in the cart (add item to the cart)
             const tempProduct = {...action.payload, cartQuantity: 1}
@@ -59,12 +58,22 @@ const cartSlice = createSlice({
 
       // save cart to LS
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
-    }
+    },
 
-  }
+    CLEAR_CART(state, action) {
+      state.cartItems = []
+      toast.info(`Cart cleared`, {position: "top-left"});
+
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
+
+    CALCULATE_SUB_TOTAL(state, action) {
+      
+    }
+  },
 });
 
-export const {ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART} = cartSlice.actions
+export const { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART, CLEAR_CART, CALCULATE_SUB_TOTAL } = cartSlice.actions
 
 export const selectCartItems = (state) => state.cart.cartItems
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity

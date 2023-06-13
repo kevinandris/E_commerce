@@ -1,7 +1,7 @@
 // ! 29
 import React from 'react'
 import styles from './Cart.module.scss'
-import { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
+import { ADD_TO_CART, CALCULATE_SUB_TOTAL, CLEAR_CART, DECREASE_CART, REMOVE_FROM_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {FaTrashAlt} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -14,16 +14,24 @@ const Cart = () => {
   const cartTotalQuantity = useSelector(selectCartTotalQuantity)
   const dispatch = useDispatch()
 
+  // ! function 1
   const increaseCart = (cart) => {
     dispatch(ADD_TO_CART(cart));
   };
 
+  // ! function 2
   const decreaseCart = (cart) => {
     dispatch(DECREASE_CART(cart));
   };
 
+  // ! function 3
   const removeFromCart = (cart) => {
     dispatch(REMOVE_FROM_CART(cart));
+  };
+
+  // ! function 4
+  const clearTheCart = () => {
+    dispatch(CLEAR_CART());
   };
   
   return (
@@ -87,7 +95,7 @@ const Cart = () => {
             </table>
 
             <div className={styles.summary}>
-                <button className='--btn --btn-danger'>Clear Cart</button>
+                <button className='--btn --btn-danger' onClick={clearTheCart}>Clear Cart</button>
 
                 <div className={styles.checkout}>
                   <div>
