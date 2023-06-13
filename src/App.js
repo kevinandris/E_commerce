@@ -21,6 +21,7 @@ import AdminOnlyRoute from './components/adminOnlyRoute/AdminOnlyRoute';
 import ProductDetails from './components/product/productDetails/ProductDetails';
 import Cart from './pages/cart/Cart';
 import CheckoutDetails from './pages/checkout/CheckoutDetails';
+import Checkout from './pages/checkout/Checkout';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/product-details/:id" element={<ProductDetails/>}/> {/* product details page */}
             <Route path="/cart" element={<Cart/>}/> {/* cart page */}
             <Route path="/checkout-details" element={<CheckoutDetails/>}/> {/* CheckoutDetails page */}
+            <Route path="/checkout" element={<Checkout/>}/> {/* Checkout page */}
 
           </Routes>
 
