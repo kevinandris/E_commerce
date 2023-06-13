@@ -7,6 +7,7 @@
 //    @reduxjs/toolkit
 //    react-redux
 //    notiflix
+//    country-region-selector
 
 // ! Toast
 import { ToastContainer} from 'react-toastify';
@@ -19,6 +20,7 @@ import {Header, Footer} from "./components"
 import AdminOnlyRoute from './components/adminOnlyRoute/AdminOnlyRoute';
 import ProductDetails from './components/product/productDetails/ProductDetails';
 import Cart from './pages/cart/Cart';
+import CheckoutDetails from './pages/checkout/CheckoutDetails';
 
 function App() {
 
@@ -46,6 +48,7 @@ function App() {
 
             <Route path="/product-details/:id" element={<ProductDetails/>}/> {/* product details page */}
             <Route path="/cart" element={<Cart/>}/> {/* cart page */}
+            <Route path="/checkout-details" element={<CheckoutDetails/>}/> {/* CheckoutDetails page */}
 
           </Routes>
 

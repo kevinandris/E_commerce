@@ -9,7 +9,6 @@ import useFetchCollection from '../../customHooks/useFetchCollection'
 import SpinnerImg from "../../assets/spinner.jpg"
 import { FaCogs } from 'react-icons/fa'
 
-
 const Product = () => {
 
   const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollection customHook to grab the components

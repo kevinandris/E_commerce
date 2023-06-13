@@ -1,6 +1,5 @@
 // ! 3 -- child
 // ! Redux allows us to access auth state from different points of your app (any components)
-
 import React, { useEffect, useState } from 'react'
 import styles from "./Header.module.scss"
 import { Link, NavLink, useNavigate } from 'react-router-dom'
@@ -9,11 +8,12 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi"
 import { auth } from '../../firebase/config'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { SET_ACTIVE_USER } from '../../redux/slice/authSlice'
 import { REMOVE_ACTIVE_USER } from '../../redux/slice/authSlice'
 import ShowOnLogin, { ShowOnLogout } from '../hiddenLink.js/HiddenLink'
 import AdminOnlyRoute, { AdminOnlyLink } from '../adminOnlyRoute/AdminOnlyRoute'
+import { CALCULATE_TOTAL_QUANTITY, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
 
 
 const logo = (
@@ -26,26 +26,28 @@ const logo = (
   </div>
 )
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart
-      <FaShoppingCart size={20}/>
-      <p>0</p>
-    </Link>
-  </span>
-)
-
 const activeLink = ({isActive}) => 
 (isActive ? `${styles.active}` : "")
 
 const Header = () => {
 
   // * variables declarations * //
-  const [showMenu, setShowMenu] = useState(false)
-  const [displayName, setDisplayName] = useState('')
+  const [showMenu, setShowMenu] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+  const [scrollPage, setScrollPage] = useState(false);
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity)
+
   const navigate = useNavigate()
   const dispatch = useDispatch() // * Redux
+
+  const fixedNavBar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true)
+    } else {
+      setScrollPage(false)
+    }
+  };
+  window.addEventListener("scroll", fixedNavBar)
 
   // ! Monitor currently signed in user using "useEffect"
   useEffect (() => { 
@@ -98,10 +100,24 @@ const Header = () => {
       toast.error(error.message)
     });
   } // close logOutUser function
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart
+        <FaShoppingCart size={20}/>
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  )
+
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY())
+  }, [])
   
   return (
     <>
-      <header>
+      <header className={scrollPage ? `${styles.fixed}` : null}>
         <div className={styles.header}>
 
           {logo}

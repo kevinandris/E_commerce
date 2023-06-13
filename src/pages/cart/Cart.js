@@ -1,11 +1,12 @@
 // ! 29
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './Cart.module.scss'
-import { ADD_TO_CART, CALCULATE_SUB_TOTAL, CLEAR_CART, DECREASE_CART, REMOVE_FROM_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
+import { ADD_TO_CART, CALCULATE_SUB_TOTAL, CALCULATE_TOTAL_QUANTITY, CLEAR_CART, DECREASE_CART, REMOVE_FROM_CART, SAVE_URL, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {FaTrashAlt} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Card from '../../components/card/Card'
+import { selectIsLoggedIn } from '../../redux/slice/authSlice'
  
 const Cart = () => {
 
@@ -13,6 +14,9 @@ const Cart = () => {
   const cartTotalAmount = useSelector(selectCartTotalAmount)
   const cartTotalQuantity = useSelector(selectCartTotalQuantity)
   const dispatch = useDispatch()
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  
+  const navigate = useNavigate()
 
   // ! function 1
   const increaseCart = (cart) => {
@@ -33,7 +37,26 @@ const Cart = () => {
   const clearTheCart = () => {
     dispatch(CLEAR_CART());
   };
-  
+
+  useEffect(() => {
+    dispatch(CALCULATE_SUB_TOTAL())
+    dispatch(CALCULATE_TOTAL_QUANTITY())
+    dispatch(SAVE_URL("")) // "" means to empty the previous URL
+  }, [cartItems, dispatch])
+
+  // ! function 5
+  const url = window.location.href;
+
+  // ! function 6
+  const checkout = () => {
+    if (isLoggedIn ) {
+      navigate("/checkout-details")
+    } else {
+      dispatch(SAVE_URL(url))
+      navigate("/login")
+    }
+  }
+
   return (
       <section>
         <div className={`container ${styles.table}`}>
@@ -110,7 +133,7 @@ const Cart = () => {
                       <h3>{`$${cartTotalAmount.toFixed(2)}`}</h3>
                     </div>
                     <p>Tax and shipping calculated at checkout</p>
-                    <button className='--btn --btn-primary --btn-block'>Checkout</button>
+                    <button className='--btn --btn-primary --btn-block' onClick={checkout}>Checkout</button>
                   </Card>
 
                 </div>

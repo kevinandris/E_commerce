@@ -19,9 +19,9 @@ const Home = () => {
     }
   };
 
-  // useEffect(() => {
-  //   scrollToProducts()
-  // }, [])
+  useEffect(() => {
+    scrollToProducts()
+  }, [])
 
   return (
     <>

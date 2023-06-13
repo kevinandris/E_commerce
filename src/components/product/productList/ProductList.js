@@ -1,4 +1,5 @@
 // ! 22 - child - deployed to product.js
+// ! productItem.js is imported in this file 
 import React, { useEffect, useState } from 'react'
 import styles from './ProductList.module.scss'
 import { BsFillGridFill } from 'react-icons/bs'
@@ -18,7 +19,7 @@ const ProductList = ({products}) => {
 
   // * pagination states
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(4)
 
   // * Get current Products
   const indexOfLastProduct = currentPage * productsPerPage;

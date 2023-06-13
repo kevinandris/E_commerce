@@ -10,6 +10,8 @@ import { auth } from '../../firebase/config'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../../components/loader/Loader'
+import { useSelector } from 'react-redux'
+import { selectPreviousURL } from '../../redux/slice/cartSlice'
 
 const Login = () => {
 
@@ -17,23 +19,33 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false)
+
     const navigate = useNavigate()
+    const previousURL = useSelector(selectPreviousURL)
+    
+    // ! function
+    const redirectUser = () => {
+        if (previousURL.includes("cart")) {
+            return navigate("/cart")
+        }
 
-    //  ! function 1
+        navigate("/")
+    }
+
+    //  ! function 
     const loginUser = (e) => {
-        // preventing the reload of the page
-        e.preventDefault()
-
+        e.preventDefault() // preventing the reload of the page
         setIsLoading(true)
 
-        // from firebase 
-        signInWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password) // * from firebase docs
         .then((userCredential) => {
             // const user = userCredential.user;
 
-            setIsLoading(false) //  * stop the loading 
+            setIsLoading(false) //  * stop the loading
             toast.success("Login Successful...")  // * success message from TOAST
-            navigate("/") // * direct user to homepage
+
+            // navigate("/") // * direct user to homepage
+            redirectUser();
         })
         .catch((error) => {
             setIsLoading(false) // * stop the loading 
@@ -47,11 +59,10 @@ const Login = () => {
         signInWithPopup(auth, provider)
         .then((result) => {
             // const user = result.user;
+            toast.success("Login Successfully...") // * Toast
 
-            // Toast
-            toast.success("Login Successfully...")
-
-            navigate("/")
+            // navigate("/")
+            redirectUser();
         }).catch((error) => {
             toast.error(error.message)
         });
