@@ -18,7 +18,7 @@ const ProductList = ({products}) => {
 
   // * pagination states
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(2)
+  const [productsPerPage, setProductsPerPage] = useState(1)
 
   // * Get current Products
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -29,7 +29,7 @@ const ProductList = ({products}) => {
 
   useEffect(() => {
     dispatch(SORT_PRODUCTS({products, sort}))
-  },[dispatch, products, sort])
+  },[dispatch, products, sort]) 
   
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({products, search}))
