@@ -1,16 +1,22 @@
-// ! 3
+// ! 37
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-
+    orderHistory: []
 }
 
 const orderSlice = createSlice({
-  name: second,
+  name: "orders",
   initialState,
-  reducers: {}
+  reducers: {
+    STORE_ORDERS(state, action) {
+        state.orderHistory = action.payload
+    }
+  }
 });
 
-export const {} = orderSlice.actions
+export const {STORE_ORDERS} = orderSlice.actions
+
+export const selectOrderHistory = (state) => state.orders.orderHistory;
 
 export default orderSlice.reducer
