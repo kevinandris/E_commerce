@@ -11,6 +11,7 @@
 //    @stripe/react-stripe-js @stripe/stripe-js 
 //    stripe
 //    express, dotenv, cors, nodemon ==> FOR BACKEND
+//    react-star-rate
 
 // ! Toast
 import { ToastContainer} from 'react-toastify';
@@ -28,6 +29,7 @@ import Checkout from './pages/checkout/Checkout';
 import CheckoutSuccess from './pages/checkout/CheckoutSuccess';
 import OrderHistory from './pages/orderHistory/OrderHistory';
 import OrderDetails from './pages/orderDetails/OrderDetails';
+import ReviewProduct from './components/reviewProducts/ReviewProduct';
 
 function App() {
 
@@ -60,6 +62,7 @@ function App() {
             <Route path="/checkout-success" element={<CheckoutSuccess/>}/> {/* Checkout success page */}
             <Route path="/order-history" element={<OrderHistory/>}/> {/* Order History page */}
             <Route path="/order-details/:id" element={<OrderDetails/>}/> {/* Order Details page */}
+            <Route path="/review-product/:id" element={<ReviewProduct/>}/> {/* Review Product page */}
 
           </Routes>
 
