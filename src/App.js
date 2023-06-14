@@ -8,6 +8,9 @@
 //    react-redux
 //    notiflix
 //    country-region-selector
+//    @stripe/react-stripe-js @stripe/stripe-js 
+//    stripe
+//    express, dotenv, cors, nodemon ==> FOR BACKEND
 
 // ! Toast
 import { ToastContainer} from 'react-toastify';
@@ -22,6 +25,8 @@ import ProductDetails from './components/product/productDetails/ProductDetails';
 import Cart from './pages/cart/Cart';
 import CheckoutDetails from './pages/checkout/CheckoutDetails';
 import Checkout from './pages/checkout/Checkout';
+import CheckoutSuccess from './pages/checkout/CheckoutSuccess';
+import OrderHistory from './pages/orderHistory/orderHistory';
 
 function App() {
 
@@ -51,6 +56,8 @@ function App() {
             <Route path="/cart" element={<Cart/>}/> {/* cart page */}
             <Route path="/checkout-details" element={<CheckoutDetails/>}/> {/* CheckoutDetails page */}
             <Route path="/checkout" element={<Checkout/>}/> {/* Checkout page */}
+            <Route path="/checkout-success" element={<CheckoutSuccess/>}/> {/* Checkout success page */}
+            <Route path="/order-history" element={<OrderHistory/>}/> {/* Order History page */}
 
           </Routes>
 

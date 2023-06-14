@@ -1,9 +1,16 @@
+// ! 37
+import useFetchCollection from '../../customHooks/useFetchCollection'
+import styles from './OrderHistory.module.scss'
 import React from 'react'
 
-const orderHistory = () => {
+const OrderHistory = () => {
+
+  const {data, isLoading } = useFetchCollection("orders")
+  console.log(data);
+  
   return (
-    <div>orderHistory</div>
+    <div>Order History</div>
   )
 }
 
-export default orderHistory
+export default OrderHistory

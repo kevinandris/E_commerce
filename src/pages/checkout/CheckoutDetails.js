@@ -30,7 +30,7 @@ const CheckoutDetails = () => {
     const handleShipping = (e) => {
         const {name, value} = e.target
         setShippingAddress({
-            ...billingAddress,
+            ...shippingAddress,
             [name]: value
         })
     }
@@ -122,7 +122,7 @@ const CheckoutDetails = () => {
                                 valueType='short'
                                 className={styles.select}
                                 value={shippingAddress.country}
-                                onChange={(val) => handleBilling({
+                                onChange={(val) => handleShipping({
                                     target: {
                                         name: "country",
                                         value: val,
@@ -137,7 +137,7 @@ const CheckoutDetails = () => {
                                 required
                                 name='phone'
                                 value={shippingAddress.phone}
-                                onChange={(e) => handleBilling(e)}
+                                onChange={(e) => handleShipping(e)}
                             />
                         </Card>
 
@@ -222,7 +222,7 @@ const CheckoutDetails = () => {
                                 placeholder='Phone'
                                 required
                                 name='phone'
-                                value={shippingAddress.phone}
+                                value={billingAddress.phone}
                                 onChange={(e) => handleBilling(e)}
                             />
 
