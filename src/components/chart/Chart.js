@@ -12,6 +12,8 @@ import {
 } from 'chart.js';
 import Card from '../card/Card';
 import { Bar } from 'react-chartjs-2';
+import { selectOrderHistory } from '../../redux/slice/orderSlice';
+import { useSelector } from 'react-redux';
 
 ChartJS.register(
   CategoryScale,
@@ -37,10 +39,25 @@ export const options = {
 
 const Chart = () => {
 
-  const placed = 2
-  const processing = 3
-  const shipped = 2
-  const delivered = 5
+  const orders = useSelector(selectOrderHistory)
+
+  // * create a new array of order status
+  const array = []
+  orders.map((item) => {
+    const { orderStatus } = item
+    array.push(orderStatus)
+  })
+
+  const getOrderCount = (arr, value) => {
+    return arr.filter((n) => n === value).length
+  }
+
+  const [q1, q2, q3, q4] = ["Order Placed...", "Processing...", "Shipped...", "Delivered"] 
+    
+  const placed = getOrderCount(array, q1)
+  const processing = getOrderCount(array, q2)
+  const shipped = getOrderCount(array, q3)
+  const delivered = getOrderCount(array, q4)
 
   const data = {
    labels: ["Placed orders", "Processing", "Shipped", "Delivered"],
