@@ -6,13 +6,15 @@ import Loader from '../../loader/Loader'
 import Card from '../../card/Card'
 import { Timestamp,  doc, setDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { db } from '../../../firebase/config'
 
 const ChangeOrderStatus = ({order, id}) => {
 
     const [status, setStatus] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     // ! function
   const editOrder = (e, id) => {
@@ -37,7 +39,7 @@ const ChangeOrderStatus = ({order, id}) => {
       setDoc(doc(db, "orders", id),  orderConfig); // * from firebase docs (add data)
       toast.success("Order status changed successfully")
       setIsLoading(false)
-      Navigate("/admin/orders")
+      navigate("/admin/orders")
     } catch (error) {
       setIsLoading(false)
       toast.error(error.message)

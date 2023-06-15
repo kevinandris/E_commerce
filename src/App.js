@@ -12,6 +12,7 @@
 //    stripe
 //    express, dotenv, cors, nodemon ==> FOR BACKEND
 //    react-star-rate
+//    react-chartjs-2
 
 // ! Toast
 import { ToastContainer} from 'react-toastify';

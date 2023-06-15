@@ -1,4 +1,4 @@
-// ! 42
+// ! 42 - child
 import InfoBox from "../../infoBox/InfoBox"
 import styles from "./Home.module.scss"
 import React from 'react'
@@ -10,6 +10,7 @@ import { STORE_PRODUCTS, selectProducts } from "../../../redux/slice/productSlic
 import { CALCULATE_TOTAL_ORDER_AMOUNT, STORE_ORDERS, selectOrderHistory, selectTotalOrderAmount } from "../../../redux/slice/orderSlice"
 import useFetchCollection from "../../../customHooks/useFetchCollection"
 import { useEffect } from "react"
+import Chart from "../../chart/Chart"
 
 // * ICONS
 const earningIcon = <AiFillDollarCircle size={30} color="#b624ff" />
@@ -65,6 +66,9 @@ const Home = () => {
           icon={ordersIcon}
         />
 
+      </div>
+      <div>
+        <Chart />
       </div>
     </div>
   )
