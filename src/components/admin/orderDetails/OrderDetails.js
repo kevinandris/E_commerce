@@ -6,6 +6,7 @@ import React from 'react'
 import  spinnerImg  from '../../../assets/spinner.jpg'
 import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
+import ChangeOrderStatus from '../changeOrderStatus/ChangeOrderStatus'
 
 const OrderDetails = () => {
     const [order, setOrder] = useState(null)
@@ -85,6 +86,7 @@ const OrderDetails = () => {
               </table>
             </>
           )}
+          <ChangeOrderStatus />
         </div>
       </>
     )
