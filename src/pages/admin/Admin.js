@@ -5,8 +5,8 @@ import Navbar from '../../components/admin/navbar/Navbar'
 import ViewProducts from '../../components/admin/viewProducts/ViewProducts'
 import AddProduct from '../../components/admin/addProduct/AddProduct'
 import Orders from '../../components/admin/orders/Orders'
-import Home from "../home/Home"
 import { Routes, Route } from 'react-router-dom'
+import Home  from '../../components/admin/home/Home'
 
 const Admin = () => {
   return (

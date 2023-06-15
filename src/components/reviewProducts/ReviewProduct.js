@@ -32,7 +32,7 @@ const ReviewProduct = () => {
   const submitReview = (e) => {
     e.preventDefault()
 
-      // ! function to send the data to our firebase database
+    // ! function to send the data to our firebase database
     const today = new Date()
     const date = today.toDateString()
     const reviewConfig = {
@@ -46,12 +46,10 @@ const ReviewProduct = () => {
     }
 
     try {
-      addDoc(collection(db, "reviews", reviewConfig),   // * from firebase docs (add data)
-        reviewConfig
-      );
-      toast.success("Review submitted successfully")
-      setRate(0)
-      setReview("")
+      addDoc(collection(db, "reviews"), reviewConfig)  // * from firebase docs (add data)
+      toast.success("Review submitted successfully");
+      setRate(0);
+      setReview("");
     } catch (error) {
       toast.error(error.message)
     }
