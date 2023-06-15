@@ -1,3 +1,4 @@
+// ! 42
 import InfoBox from "../../infoBox/InfoBox"
 import styles from "./Home.module.scss"
 import React from 'react'
