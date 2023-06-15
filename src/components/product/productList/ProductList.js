@@ -26,7 +26,7 @@ const ProductList = ({products}) => {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
   
-  const dispatch = useDispatch(selectFilteredProducts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(SORT_PRODUCTS({products, sort}))

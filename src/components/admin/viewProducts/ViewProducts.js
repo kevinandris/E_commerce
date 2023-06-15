@@ -12,11 +12,14 @@ import Notiflix from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
 import { STORE_PRODUCTS, selectProducts } from '../../../redux/slice/productSlice';
 import useFetchCollection from '../../../customHooks/useFetchCollection';
+import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice';
+import Search from '../../search/Search';
 
 const ViewProducts = () => {
-
+  const [search, setSearch] = useState("");
   const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollectionHook to grab the components
   const products = useSelector(selectProducts)
+  const filteredProducts = useSelector(selectFilteredProducts)
 
   const dispatch = useDispatch();
 
@@ -26,7 +29,11 @@ const ViewProducts = () => {
             products: data,
           })
         );
-  }, [dispatch, data])
+  }, [dispatch, data]);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }))
+  },[dispatch, products, search]);
 
   // ! function 1
   const confirmDelete = (id, imageURL) => {
@@ -82,8 +89,17 @@ const ViewProducts = () => {
       <div className={styles.table}>
         <h2>All Products</h2>
 
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> products found
+          </p>
+
+          <Search value={search} onChange={(e) => setSearch(e.target.value)}/>
+
+        </div>
+
         {/* IF THERE IS NOTHING displays a message */}
-        {products.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <p>No product found.</p>
           ) : (
             <table>
@@ -99,7 +115,7 @@ const ViewProducts = () => {
                   </thead>
 
                   <tbody>
-                    {products.map((product, index) => {
+                    {filteredProducts.map((product, index) => {
                       const {id, name, price, imageURL, category} = product;
                       return (
                         <tr key={id}>
