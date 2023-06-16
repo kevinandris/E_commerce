@@ -6,7 +6,7 @@ import { getStorage } from "firebase/storage"
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyDv6--bRTMy6VS2Yx6xtTZ7VrLvcsmd5IU",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
   authDomain: "eshop-2945f.firebaseapp.com",
   projectId: "eshop-2945f",
   storageBucket: "eshop-2945f.appspot.com",

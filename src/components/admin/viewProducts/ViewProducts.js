@@ -24,7 +24,7 @@ const ViewProducts = () => {
 
   // * pagination states
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage] = useState(5)
+  const [productsPerPage] = useState(4)
 
   // * Get current Products
   const indexOfLastProduct = currentPage * productsPerPage;
