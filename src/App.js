@@ -13,6 +13,7 @@
 //    express, dotenv, cors, nodemon ==> FOR BACKEND
 //    react-star-rate
 //    react-chartjs-2
+//    @emailjs/browser -- emailjs.com
 
 // ! Toast
 import { ToastContainer} from 'react-toastify';
