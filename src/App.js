@@ -32,6 +32,7 @@ import CheckoutSuccess from './pages/checkout/CheckoutSuccess';
 import OrderHistory from './pages/orderHistory/OrderHistory';
 import OrderDetails from './pages/orderDetails/OrderDetails';
 import ReviewProduct from './components/reviewProducts/ReviewProduct';
+import NotFound from './pages/notFound/NotFound';
 
 function App() {
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/order-history" element={<OrderHistory/>}/> {/* Order History page */}
             <Route path="/order-details/:id" element={<OrderDetails/>}/> {/* Order Details page */}
             <Route path="/review-product/:id" element={<ReviewProduct/>}/> {/* Review Product page */}
+            <Route path="/*" element={<NotFound/>}/> {/* Not Found page */}
 
           </Routes>
 
