@@ -14,12 +14,22 @@ import { STORE_PRODUCTS, selectProducts } from '../../../redux/slice/productSlic
 import useFetchCollection from '../../../customHooks/useFetchCollection';
 import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice';
 import Search from '../../search/Search';
+import Pagination from '../../pagination/Pagination';
 
 const ViewProducts = () => {
   const [search, setSearch] = useState("");
   const  { data, isLoading } = useFetchCollection("products"); // * use FetchCollectionHook to grab the components
   const products = useSelector(selectProducts)
   const filteredProducts = useSelector(selectFilteredProducts)
+
+  // * pagination states
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(5)
+
+  // * Get current Products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
 
   const dispatch = useDispatch();
 
@@ -115,7 +125,7 @@ const ViewProducts = () => {
                   </thead>
 
                   <tbody>
-                    {filteredProducts.map((product, index) => {
+                    {currentProducts.map((product, index) => {
                       const {id, name, price, imageURL, category} = product;
                       return (
                         <tr key={id}>
@@ -155,6 +165,14 @@ const ViewProducts = () => {
                   </tbody>
             </table>
           )} 
+
+          {/* PAGINATION COMPONENT */}
+          <Pagination 
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            productsPerPage={productsPerPage}
+            totalProducts={filteredProducts.length} // coming from redux
+          />
       </div>
     </>
   )
